@@ -1,0 +1,2 @@
+[splunkUF-Install]
+10.0.0.5 ansible_connection=ssh ansible_user=azureuser ansible_password="joj@123MRKR$$" ansible_become_password="joj@123MRKR$$"

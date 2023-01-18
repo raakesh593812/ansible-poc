@@ -1,0 +1,5 @@
+- name: main | ensure required cluster agent packages are installed
+  package:
+    name: 
+      - apache2 
+    state: present

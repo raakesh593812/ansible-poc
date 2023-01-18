@@ -1,0 +1,4 @@
+- name: ps check 
+  win_shell: "{{ item }}"
+  with_file:
+    - test.ps1

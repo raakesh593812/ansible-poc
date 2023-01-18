@@ -1,0 +1,12 @@
+#----------------------------------------------------------------
+- hosts: splunkUF-Install
+  become: yes
+  become_user: root
+  vars_files:
+    - var.yml
+  roles:
+    - basisuser
+    - package
+    - powershell
+    - ps_module
+

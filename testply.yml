@@ -1,0 +1,13 @@
+
+---
+- hosts: all
+  gather_facts: True
+  tasks:
+
+  - name: Run a pwsh command
+    shell: "{{ item }}"
+    args:
+      executable: /usr/bin/pwsh
+    with_file:
+            - test.ps1        
+    register: result

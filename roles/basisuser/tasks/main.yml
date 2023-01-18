@@ -1,0 +1,16 @@
+---
+- name: Create a user with hashed password
+  user:
+    name: demouser
+    state: present
+    comment: "Adding  user for team"
+    password: "{{ default_pwd | password_hash('sha512') }}"
+    shell: /bin/bash
+- name: Add user to /etc/sudoers
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    line: "{{ item }}"
+  with_items:
+    - '# Adding user entry with sudo '
+    - 'basissvc ALL=NOPASSWD: ALL'
+...
