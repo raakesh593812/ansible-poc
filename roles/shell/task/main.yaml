@@ -1,0 +1,30 @@
+###we have used filter option and conditions
+---
+- name: get the rpm or apt package facts
+  package_facts:
+    manager: rpm
+
+- name: set fact dbtype
+  set_fact:
+    filtered_package_names: "{{ ansible_facts.packages |  dict2items | selectattr('key', 'match', package_prefix) | map(attribute='value')| flatten  }}"
+
+- name: set new fact for nodejs
+  set_fact:
+          value_new: "{{ ansible_facts.packages['nodejs']| json_query('[].version') }}" # create a empty variable to avoid the error
+  when: "'nodejs' in ansible_facts.packages"
+
+- name: Print filtered packages
+  debug:
+    var: filtered_package_names
+- name: print
+  debug:
+      var: value_new
+
+- name: Ensure if nodejs is installed
+  shell: yum module install -y  nodejs{{ ':' }}{{ nodejs_version }} > /tmp/yumlog_run.txt
+  args:
+   executable: /bin/bash
+  when:  #("'nodejs' not in ansible_facts.packages") and ( nodejs_version not in value_new )
+    - "'nodejs' not in ansible_facts.packages"
+    -  nodejs_version not in value_new
+...
